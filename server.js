@@ -1,20 +1,23 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const passport = require("passport");
+const passport = require("passport"); //user auth
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
-const methodOverride = require("method-override");
+const methodOverride = require("method-override"); //override methods to do PUT and DELETE form submissions
 const flash = require("express-flash");
 const logger = require("morgan");
 const connectDB = require("./config/database");
 const mainRoutes = require("./routes/main");
 const postRoutes = require("./routes/posts");
+const commentRoutes = require("./routes/comments")
 
-//Use .env file in config folder
+//Use .env file in config folder (to enable permissions to run the server with node server.js to render the frontend)
 require("dotenv").config({ path: "./config/.env" });
+console.log("DB_STRING from .env:", process.env.DB_STRING);
 
-// Passport config
+
+// Passport config (enables user authentication)
 require("./config/passport")(passport);
 
 //Connect To Database
@@ -30,7 +33,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-//Logging
+//Logging (the different HTTP requests and routes that you see in the terminal)
 app.use(logger("dev"));
 
 //Use forms for put / delete
@@ -56,6 +59,7 @@ app.use(flash());
 //Setup Routes For Which The Server Is Listening
 app.use("/", mainRoutes);
 app.use("/post", postRoutes);
+app.use("/comment", commentRoutes);
 
 //Server Running
 app.listen(process.env.PORT, () => {

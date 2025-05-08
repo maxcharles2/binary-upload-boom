@@ -1,4 +1,5 @@
 const express = require("express");
+//router is like the typical app but instead of express() it's calling the router method express.Router() (see docs)
 const router = express.Router();
 const authController = require("../controllers/auth");
 const homeController = require("../controllers/home");
@@ -14,5 +15,7 @@ router.post("/login", authController.postLogin);
 router.get("/logout", authController.logout);
 router.get("/signup", authController.getSignup);
 router.post("/signup", authController.postSignup);
+
+//login and signup have both get and post requests routes for main routes
 
 module.exports = router;
