@@ -1,6 +1,7 @@
 const Comment = require("../models/Comment");
 const Post = require("../models/Post");
 
+
 module.exports = {
 //   getProfile: async (req, res) => {
 //     try {
@@ -62,11 +63,9 @@ module.exports = {
     try {
       // Find post by id
       let comment = await Comment.findById({ _id: req.params.id });
-      // Delete image from cloudinary
-      await cloudinary.uploader.destroy(post.cloudinaryId);
       // Delete post from db
       await Comment.remove({ _id: req.params.id });
-      console.log("Deleted Post");
+      console.log("Deleted Comment");
       res.redirect(`/post/${comment.post}`);
     } catch (err) {
       // res.redirect("/profile");

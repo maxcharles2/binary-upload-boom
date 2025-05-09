@@ -5,6 +5,10 @@ const CommentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  cloudinaryId: {
+    type: String,
+    require: true,
+  },
   likes: {
     type: Number,
     required: true,
